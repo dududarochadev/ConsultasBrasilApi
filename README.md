@@ -14,9 +14,12 @@ Modelos:
 
 GET /modelos
 - Retorna a lista de todos modelos disponíveis no banco de dados.
+  
 GET /modelos/marca/{id}
 - Retorna a lista de todos modelos de uma determinada marca.
+  
 GET /modelos/ano/{ano}
 - Retorna a lista de todos modelos de um determinado ano.
+  
 GET /modelos/data/{data}
 - Retorna a lista de todos modelos que foram consultados na data informada.
