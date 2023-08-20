@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.dududarochadev.consultasbrasilapi.services.ServicoDeApi;
+import br.dududarochadev.consultasbrasilapi.servicos.ServicoDeApi;
 
 @RestController
 @RequestMapping("/api")

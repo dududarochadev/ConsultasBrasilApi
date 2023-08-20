@@ -1,8 +1,8 @@
-package br.dududarochadev.consultasbrasilapi.models;
+package br.dududarochadev.consultasbrasilapi.dados.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RespostaRequisicao<T> {
+public class DtoDeRespostaRequisicao<T> {
     @JsonProperty("error")
     public boolean error;
     @JsonProperty("message")

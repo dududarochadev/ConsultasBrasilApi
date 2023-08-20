@@ -1,10 +1,10 @@
-package br.dududarochadev.consultasbrasilapi.models;
+package br.dududarochadev.consultasbrasilapi.dados.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Marca {
+public class DtoIdDescricao {
     @JsonProperty("Value")
-    public int codigo;
+    public String id;
     @JsonProperty("Label")
     public String descricao;
 }
