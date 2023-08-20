@@ -5,6 +5,7 @@ Para executar a aplicação deve-se clonar a aplicação para o VSCode e executa
 Após executar, a aplicação estará rodando na porta 8080.
 
 Exemplo de requisição para a aplicação localmente:
+
 ![image](https://github.com/dududarochadev/ConsultasBrasilApi/assets/114098227/afa6eac3-81be-4812-87f3-7b4f0d898423)
 
 Os possíveis endpoints são:
