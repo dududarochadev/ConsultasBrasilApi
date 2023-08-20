@@ -18,5 +18,15 @@
     "name": "apibrasil.secret",
     "type": "java.lang.String",
     "description": "A description for 'apibrasil.secret'"
+  },
+  {
+    "name": "apibrasil.urlbase",
+    "type": "java.lang.String",
+    "description": "A description for 'apibrasil.urlbase'"
+  },
+  {
+    "name": "local.desenvolvimento",
+    "type": "java.lang.String",
+    "description": "A description for 'local.desenvolvimento'"
   }
 ]}

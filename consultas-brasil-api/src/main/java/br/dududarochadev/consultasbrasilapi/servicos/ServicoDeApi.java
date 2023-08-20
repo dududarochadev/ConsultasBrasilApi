@@ -35,7 +35,10 @@ public class ServicoDeApi {
     @Autowired
     RepositorioDeAnoModelo repositorioDeAnoModelo;
 
-    private String URL_BASE = "https://cluster-01.apigratis.com/api";
+    @Value("${local.desenvolvimento}")
+    private boolean Desenvolvimento;
+    @Value("${apibrasil.urlbase}")
+    private String URL_BASE;
     @Value("${apibrasil.token}")
     private String TOKEN;
     @Value("${apibrasil.secret}")
@@ -128,6 +131,10 @@ public class ServicoDeApi {
                 repositorioDeMarca.save(entidade);
 
                 ObterModelos(tipoVeiculo, tabelaReferencia, marca.id);
+
+                if (Desenvolvimento) {
+                    break;
+                }
             }
         }
     }
