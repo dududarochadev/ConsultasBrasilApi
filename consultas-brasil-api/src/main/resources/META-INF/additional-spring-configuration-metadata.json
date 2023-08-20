@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "apibrasil.token",
+    "type": "java.lang.String",
+    "description": "A description for 'apibrasil.token'"
+  },
+  {
+    "name": "apibrasil.device",
+    "type": "java.lang.String",
+    "description": "A description for 'apibrasil.device'"
+  },
+  {
+    "name": "apibrasil.public",
+    "type": "java.lang.String",
+    "description": "A description for 'apibrasil.public'"
+  },
+  {
+    "name": "apibrasil.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'apibrasil.secret'"
+  }
+]}

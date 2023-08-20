@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.dududarochadev.consultasbrasilapi.models.Carro;
 import br.dududarochadev.consultasbrasilapi.models.projecoes.ProjecaoDeCarro;
 import br.dududarochadev.consultasbrasilapi.repositorios.RepositorioDeCarro;
 
+@Service
 public class ServicoDeCarro {
     @Autowired
     private RepositorioDeCarro repositorioDeCarro;
