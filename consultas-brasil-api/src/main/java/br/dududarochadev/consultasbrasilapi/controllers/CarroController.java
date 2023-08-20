@@ -1,5 +1,6 @@
 package br.dududarochadev.consultasbrasilapi.controllers;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +52,9 @@ public class CarroController {
         return ResponseEntity.ok(carros);
     }
 
-    @GetMapping(path = "/dia/{dia}/{mes}/{ano}")
-    public ResponseEntity<List<ProjecaoDeCarro>> ObterModeloPorDia(@PathVariable int dia, @PathVariable int mes,
-            @PathVariable int ano) {
-        var carros = servicoDeCarro.ObterModeloPorDia(dia, mes, ano);
+    @GetMapping(path = "/data/{data}")
+    public ResponseEntity<List<ProjecaoDeCarro>> ObterModeloPorData(@PathVariable String data) throws ParseException {
+        var carros = servicoDeCarro.ObterModeloPorData(data);
 
         if (carros.isEmpty()) {
             return ResponseEntity.notFound().build();
