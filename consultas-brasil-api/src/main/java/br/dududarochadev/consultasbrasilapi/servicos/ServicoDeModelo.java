@@ -2,6 +2,7 @@ package br.dududarochadev.consultasbrasilapi.servicos;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,23 +26,27 @@ public class ServicoDeModelo {
 
     public List<ProjecaoDeModelo> ObterModeloPorAno(String idAno) {
         var modelos = repositorioDeModelo.findAll().stream()
-                .filter(modelo -> modelo.anos.stream().anyMatch(ano -> ano.codigoApi == idAno))
+                .filter(modelo -> modelo.anos.stream().anyMatch(ano -> ano.codigoApi.equals(idAno)))
                 .collect(Collectors.toList());
         return Mapear(modelos);
     }
 
     public List<ProjecaoDeModelo> ObterModeloPorMarca(String idMarca) {
         var modelos = repositorioDeModelo.findAllWithMarca().stream()
-                .filter(modelo -> modelo.marca.codigoApi == idMarca)
+                .filter(modelo -> modelo.marca.codigoApi.equals(idMarca))
                 .collect(Collectors.toList());
         return Mapear(modelos);
     }
 
     public List<ProjecaoDeModelo> ObterModeloPorData(String dataString) throws ParseException {
-        var formato = new SimpleDateFormat("dd/MM/yyyy");
-        var data = formato.parse(dataString);
-        var modelos = repositorioDeModelo.findAll().stream().filter(modelo -> modelo.dataInclusao == data)
+        var formato = new SimpleDateFormat("dd-MM-yyyy");
+        var data = formato.parse(dataString).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        var modelos = repositorioDeModelo.findAll().stream()
+                .filter(modelo -> modelo.dataInclusao.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                        .equals(data))
                 .collect(Collectors.toList());
+
         return Mapear(modelos);
     }
 

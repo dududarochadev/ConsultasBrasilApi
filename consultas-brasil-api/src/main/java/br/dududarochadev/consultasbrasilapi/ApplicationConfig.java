@@ -16,6 +16,6 @@ public class ApplicationConfig {
 
     @PostConstruct
     public void iniciarServico() {
-        servicoDeApi.Executar();
+        // servicoDeApi.Executar();
     }
 }

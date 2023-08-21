@@ -30,7 +30,7 @@ public class ModeloController {
         return ResponseEntity.ok(modelos);
     }
 
-    @GetMapping(path = "/marca/{marca}")
+    @GetMapping(path = "/marca/{idMarca}")
     public ResponseEntity<List<ProjecaoDeModelo>> ObterModeloPorMarca(@PathVariable String idMarca) {
         var modelos = servicoDeModelo.ObterModeloPorMarca(idMarca);
 
@@ -41,7 +41,7 @@ public class ModeloController {
         return ResponseEntity.ok(modelos);
     }
 
-    @GetMapping(path = "/ano/{ano}")
+    @GetMapping(path = "/ano/{idAno}")
     public ResponseEntity<List<ProjecaoDeModelo>> ObterModeloPorAno(@PathVariable String idAno) {
         var modelos = servicoDeModelo.ObterModeloPorAno(idAno);
 
