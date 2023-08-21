@@ -19,20 +19,20 @@ public class ServicoDeModelo {
     private RepositorioDeModelo repositorioDeModelo;
 
     public List<ProjecaoDeModelo> ListarModelos() {
-        var modelos = repositorioDeModelo.findAll();
+        var modelos = repositorioDeModelo.findAllWithMarca();
         return Mapear(modelos);
     }
 
     public List<ProjecaoDeModelo> ObterModeloPorAno(String idAno) {
         var modelos = repositorioDeModelo.findAll().stream()
-                .filter(modelo -> modelo.anos.stream().anyMatch(ano -> ano.id == idAno))
+                .filter(modelo -> modelo.anos.stream().anyMatch(ano -> ano.codigoApi == idAno))
                 .collect(Collectors.toList());
         return Mapear(modelos);
     }
 
     public List<ProjecaoDeModelo> ObterModeloPorMarca(String idMarca) {
-        var modelos = repositorioDeModelo.findAll().stream()
-                .filter(modelo -> modelo.idMarca == Integer.parseInt(idMarca))
+        var modelos = repositorioDeModelo.findAllWithMarca().stream()
+                .filter(modelo -> modelo.marca.codigoApi == idMarca)
                 .collect(Collectors.toList());
         return Mapear(modelos);
     }
@@ -46,9 +46,9 @@ public class ServicoDeModelo {
     }
 
     private List<ProjecaoDeModelo> Mapear(List<Modelo> modelos) {
-        var projecaoDeModelos = new ArrayList<ProjecaoDeModelo>();
-        modelos.forEach(modelo -> new ProjecaoDeModelo(modelo.descricao, modelo.marca.descricao,
-                modelo.dataInclusao.toString()));
-        return projecaoDeModelos;
+        var projecoesDeModelo = new ArrayList<ProjecaoDeModelo>();
+        modelos.forEach(modelo -> projecoesDeModelo.add(new ProjecaoDeModelo(modelo.descricao, modelo.marca.descricao,
+                modelo.dataInclusao.toString())));
+        return projecoesDeModelo;
     }
 }

@@ -5,7 +5,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -127,10 +129,13 @@ public class ServicoDeApi {
                     });
 
             for (var marca : objetoDeResponse.response) {
-                var entidade = new Marca(Integer.parseInt(marca.id), marca.descricao);
-                repositorioDeMarca.save(entidade);
+                Marca entidade = repositorioDeMarca.findByCodigoApi(marca.id);
 
-                ObterModelos(tipoVeiculo, tabelaReferencia, marca.id);
+                if (entidade == null) {
+                    entidade = new Marca(marca.id, marca.descricao);
+                }
+
+                ObterModelos(tipoVeiculo, tabelaReferencia, entidade);
 
                 if (Desenvolvimento) {
                     break;
@@ -139,12 +144,12 @@ public class ServicoDeApi {
         }
     }
 
-    public void ObterModelos(int tipoVeiculo, String tabelaReferencia, String marca)
+    public void ObterModelos(int tipoVeiculo, String tabelaReferencia, Marca marca)
             throws IOException, InterruptedException {
 
         var endpoint = "/v1/vehicles/ConsultarModelos";
         var payload = "{\"codigoTabelaReferencia\": " + tabelaReferencia + ",\"codigoTipoVeiculo\": " + tipoVeiculo
-                + ",\"codigoMarca\": " + marca
+                + ",\"codigoMarca\": " + marca.codigoApi
                 + "}";
 
         var url = URL_BASE + endpoint;
@@ -172,22 +177,30 @@ public class ServicoDeApi {
                     new TypeReference<DtoDeRespostaRequisicao<DtoDeModelos>>() {
                     });
 
+            var modelos = new ArrayList<Modelo>();
             for (var modelo : objetoDeResponse.response.modelos) {
-                var entidade = new Modelo(Integer.parseInt(modelo.id), modelo.descricao, Integer.parseInt(marca),
-                        new Date());
-                repositorioDeModelo.save(entidade);
+                Modelo entidade = repositorioDeModelo.findByCodigoApi(modelo.id);
 
-                ObterAnosModelo(tipoVeiculo, tabelaReferencia, marca, modelo.id);
+                if (entidade == null) {
+                    entidade = new Modelo(modelo.id, modelo.descricao, new Date(), marca);
+                }
+
+                ObterAnosModelo(tipoVeiculo, tabelaReferencia, marca, entidade);
+
+                modelos.add(entidade);
             }
+
+            marca.modelos = modelos;
+            repositorioDeMarca.save(marca);
         }
     }
 
-    public void ObterAnosModelo(int tipoVeiculo, String tabelaReferencia, String marca, String modelo)
+    public void ObterAnosModelo(int tipoVeiculo, String tabelaReferencia, Marca marca, Modelo modelo)
             throws IOException, InterruptedException {
 
         var endpoint = "/v1/vehicles/ConsultarAnoModelo";
         var payload = "{\"codigoTabelaReferencia\": " + tabelaReferencia + ",\"codigoTipoVeiculo\": " + tipoVeiculo
-                + ",\"codigoMarca\": " + marca + ",\"codigoModelo\": " + modelo
+                + ",\"codigoMarca\": " + marca.codigoApi + ",\"codigoModelo\": " + modelo.codigoApi
                 + "}";
 
         var url = URL_BASE + endpoint;
@@ -212,14 +225,21 @@ public class ServicoDeApi {
         if (response.body() != "") {
             var mapper = new ObjectMapper();
             var objetoDeResponse = mapper.readValue(response.body(),
-                    new TypeReference<DtoDeRespostaRequisicao<DtoIdDescricao[]>>() {
+                    new TypeReference<DtoDeRespostaRequisicao<List<DtoIdDescricao>>>() {
                     });
 
+            var anos = new ArrayList<AnoModelo>();
             for (var anoModelo : objetoDeResponse.response) {
-                var entidade = new AnoModelo(anoModelo.id, anoModelo.descricao,
-                        Integer.parseInt(modelo));
-                repositorioDeAnoModelo.save(entidade);
+                AnoModelo entidade = repositorioDeAnoModelo.findByCodigoApi(anoModelo.id);
+
+                if (entidade == null) {
+                    entidade = new AnoModelo(anoModelo.id, anoModelo.descricao, modelo);
+                }
+
+                anos.add(entidade);
             }
+
+            modelo.anos = anos;
         }
     }
 

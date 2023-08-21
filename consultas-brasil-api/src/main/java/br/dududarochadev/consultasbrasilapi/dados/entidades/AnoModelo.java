@@ -1,20 +1,31 @@
 package br.dududarochadev.consultasbrasilapi.dados.entidades;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "anomodelo")
 public class AnoModelo {
-    public AnoModelo(String id, String descricao, int idModelo) {
-        this.id = id;
+    public AnoModelo() {
+    }
+
+    public AnoModelo(String codigoApi, String descricao, Modelo modelo) {
+        this.codigoApi = codigoApi;
         this.descricao = descricao;
-        this.idModelo = idModelo;
+        this.modelo = modelo;
     }
 
     @Id
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
+    public String codigoApi;
     public String descricao;
-    public int idModelo;
+    @ManyToOne
+    @JoinColumn(name = "modelo_id")
+    public Modelo modelo;
 }
